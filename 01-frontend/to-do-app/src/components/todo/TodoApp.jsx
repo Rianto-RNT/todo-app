@@ -16,15 +16,18 @@ class LoginComponent extends Component {
     super(props);
     this.state = {
       username: 'RNT-todo',
-      password: ''
+      password: '',
+      hasLoginFailed: false,
+      showSuccessMessage: false,
     };
     // this.handlerUsernameChange = this.handlerUsernameChange.bind(this);
     // this.handlerPasswordChange = this.handlerPasswordChange.bind(this);
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.loginClicked = this.loginClicked.bind(this);
   }
 
   handleChange(event) {
-    console.log(this.state);
+    // console.log(this.state);
     this.setState({
       [event.target.name]: event.target.value,
     });
@@ -44,15 +47,46 @@ class LoginComponent extends Component {
   //   });
   // }
 
+  loginClicked() {
+    // RNT-todo, dummy
+    if (this.state.username === 'RNT-todo' && this.state.password === 'dummy') {
+      console.log('Successful');
+      this.setState({ showSuccessMessage: true });
+      this.setState({ hasLoginFailed: false });
+    } else {
+      this.setState({ showSuccessMessage: false });
+      this.setState({ hasLoginFailed: true });
+    }
+
+    // console.log(this.state);
+  }
+
   render() {
     return (
       <div>
+        <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed} />
+        <ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>
         User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
-        Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
-        <button>Login</button>
+        Password:{' '}
+        <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+        <button onClick={this.loginClicked}>Login</button>
       </div>
     );
   }
+}
+
+function ShowInvalidCredentials(props) {
+  if (props.hasLoginFailed) {
+    return <div>Invalid Credentials</div>;
+  }
+  return null;
+}
+
+function ShowLoginSuccessMessage(props) {
+  if (props.showSuccessMessage) {
+    return <div>Login Successful</div>;
+  }
+  return null
 }
 
 export default TodoApp;
