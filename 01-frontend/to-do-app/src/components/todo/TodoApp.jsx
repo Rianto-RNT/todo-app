@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { match } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class TodoApp extends Component {
@@ -10,7 +11,7 @@ class TodoApp extends Component {
             <Switch>
               <Route path="/" exact component={LoginComponent} />
               <Route path="/login" component={LoginComponent} />
-              <Route path="/welcome" component={WelcomeComponent} />
+              <Route path="/welcome/:name" component={WelcomeComponent} />
               <Route component={ErrorComponent} />
             </Switch>
           </>
@@ -24,7 +25,7 @@ class TodoApp extends Component {
 
 class WelcomeComponent extends Component {
   render() {
-    return <div>Welcome to RNT to App</div>;
+    return <div>Welcome, {this.props.match.params.name}</div>;
   }
 }
 
@@ -37,7 +38,7 @@ class LoginComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'RNT-todo',
+      username: 'rian',
       password: '',
       hasLoginFailed: false,
       showSuccessMessage: false,
@@ -71,8 +72,8 @@ class LoginComponent extends Component {
 
   loginClicked() {
     // RNT-todo, dummy
-    if (this.state.username === 'RNT-todo' && this.state.password === 'dummy') {
-      this.props.history.push('/welcome');
+    if (this.state.username === 'rian' && this.state.password === 'dummy') {
+      this.props.history.push(`/welcome/${this.state.username}`);
       // this.setState({ showSuccessMessage: true });
       // this.setState({ hasLoginFailed: false });
     } else {
