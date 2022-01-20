@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { match } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class TodoApp extends Component {
@@ -12,12 +11,50 @@ class TodoApp extends Component {
               <Route path="/" exact component={LoginComponent} />
               <Route path="/login" component={LoginComponent} />
               <Route path="/welcome/:name" component={WelcomeComponent} />
+              <Route path="/todos" component={ListTodosComponent} />
               <Route component={ErrorComponent} />
             </Switch>
           </>
         </Router>
         {/* <LoginComponent></LoginComponent>
         <WelcomeComponent></WelcomeComponent> */}
+      </div>
+    );
+  }
+}
+
+class ListTodosComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      todos: [
+        { id: 1, description: 'Learn React' },
+        { id: 2, description: 'Become an expert in react' },
+        { id: 2, description: 'Visit Lenangguar, Sumbawa, West Nusa Tenggara' },
+      ],
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <h1> LIst Todos</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.todos.map((todo) => (
+              <tr>
+                <td>{todo.id}</td>
+                <td>{todo.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
