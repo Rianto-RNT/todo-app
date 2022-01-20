@@ -7,7 +7,7 @@ class TodoApp extends Component {
       <div className="TodoApp">
         <Router>
           <>
-          <HeaderComponent></HeaderComponent>
+            <HeaderComponent></HeaderComponent>
             <Switch>
               <Route path="/" exact component={LoginComponent} />
               <Route path="/login" component={LoginComponent} />
@@ -28,20 +28,28 @@ class TodoApp extends Component {
 class HeaderComponent extends Component {
   render() {
     return (
-      <div>
-        Header <hr/>
-      </div>
-    )
+      <>
+        <header>
+          <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+            <div><a href='http://www.rnt-creative.io' className='navbar-brand'>RNT-Todo-App</a></div>
+            <ul className="navbar-nav">
+              <li><Link className='nav-link' to="/welcome">Home</Link></li>
+              <li><Link className='nav-link' to="/todos">Todos</Link></li>
+            </ul>
+            <ul className="navbar-nav navbar-collapse justify-content-end">
+              <li><Link className='nav-link' to="/Login">Login</Link></li>
+              <li><Link className='nav-link' to="/logout">Logout</Link></li>
+            </ul>
+          </nav>
+        </header>
+      </>
+    );
   }
 }
 
 class FooterComponent extends Component {
   render() {
-    return (
-      <div>
-        Footer 
-      </div>
-    )
+    return <div>Footer</div>;
   }
 }
 
