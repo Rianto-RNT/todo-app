@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class TodoApp extends Component {
   render() {
     return (
       <div className="TodoApp">
-        <LoginComponent></LoginComponent>
+        <Router>
+          <>
+            <Route path="/" exact component={LoginComponent} />
+            <Route path="/login" component={LoginComponent} />
+            <Route path="/welcome" component={WelcomeComponent} />
+          </>
+        </Router>
+        {/* <LoginComponent></LoginComponent>
+        <WelcomeComponent></WelcomeComponent> */}
       </div>
     );
+  }
+}
+
+class WelcomeComponent extends Component {
+  render() {
+    return <div>Welcome to RNT to App</div>;
   }
 }
 
@@ -69,8 +84,7 @@ class LoginComponent extends Component {
         {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
         {this.state.showSuccessMessage && <div>Login Successful</div>}
         User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
-        Password:{' '}
-        <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+        Password:<input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
         <button onClick={this.loginClicked}>Login</button>
       </div>
     );
@@ -88,7 +102,7 @@ function ShowLoginSuccessMessage(props) {
   if (props.showSuccessMessage) {
     return <div>Login Successful</div>;
   }
-  return null
+  return null;
 }
 
 export default TodoApp;
