@@ -65,9 +65,9 @@ class LoginComponent extends Component {
   loginClicked() {
     // RNT-todo, dummy
     if (this.state.username === 'RNT-todo' && this.state.password === 'dummy') {
-      console.log('Successful');
-      this.setState({ showSuccessMessage: true });
-      this.setState({ hasLoginFailed: false });
+      this.props.history.push("/welcome")
+      // this.setState({ showSuccessMessage: true });
+      // this.setState({ hasLoginFailed: false });
     } else {
       this.setState({ showSuccessMessage: false });
       this.setState({ hasLoginFailed: true });
