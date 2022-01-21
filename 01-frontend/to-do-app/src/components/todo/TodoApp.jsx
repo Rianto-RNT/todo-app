@@ -71,10 +71,10 @@ class HeaderComponent extends Component {
 class FooterComponent extends Component {
   render() {
     return (
-      <footer className='footer'>
-        <span className='text-muted'>All Right Reserved 2021 &#64; Powered By Rian </span>
+      <footer className="footer">
+        <span className="text-muted">All Right Reserved 2021 &#64; Powered By Rian </span>
       </footer>
-    )
+    );
   }
 }
 
@@ -105,26 +105,27 @@ class ListTodosComponent extends Component {
     return (
       <div>
         <h1> List Todos</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Description</th>
-              <th>Target Date</th>
-              <th>Is Completed</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.todos.map((todo) => (
+
+        <div className="container">
+          <table className='table'>
+            <thead>
               <tr>
-                <td>{todo.id}</td>
-                <td>{todo.description}</td>
-                <td>{todo.done.toString()}</td>
-                <td>{todo.targetDate.toString()}</td>
+                <th>Description</th>
+                <th>Target Date</th>
+                <th>Is Completed</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {this.state.todos.map((todo) => (
+                <tr>
+                  <td>{todo.description}</td>
+                  <td>{todo.done.toString()}</td>
+                  <td>{todo.targetDate.toString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
@@ -133,9 +134,12 @@ class ListTodosComponent extends Component {
 class WelcomeComponent extends Component {
   render() {
     return (
-      <div>
-        Welcome, {this.props.match.params.name}. You can manage your todos <Link to="/todos">here</Link>
-      </div>
+      <>
+        <h1>Welcome</h1>
+        <div className="container">
+          Welcome, {this.props.match.params.name}. You can manage your todos <Link to="/todos">here</Link>
+        </div>
+      </>
     );
   }
 }
@@ -198,14 +202,20 @@ class LoginComponent extends Component {
   render() {
     return (
       <div>
-        {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed} /> */}
-        {/* <ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/> */}
-        {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
-        {this.state.showSuccessMessage && <div>Login Successful</div>}
-        User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
-        Password:
-        <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
-        <button onClick={this.loginClicked}>Login</button>
+        <h1>Login</h1>
+        <div className="container">
+          {/* <ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed} /> */}
+          {/* <ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/> */}
+          {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials</div>}
+          {this.state.showSuccessMessage && <div>Login Successful</div>}
+          User Name:{' '}
+          <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
+          Password:
+          <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+          <button className="btn btn-success" onClick={this.loginClicked}>
+            Login
+          </button>
+        </div>
       </div>
     );
   }
