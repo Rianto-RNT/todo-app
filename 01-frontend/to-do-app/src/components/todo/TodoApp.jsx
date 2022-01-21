@@ -13,6 +13,7 @@ class TodoApp extends Component {
               <Route path="/login" component={LoginComponent} />
               <Route path="/welcome/:name" component={WelcomeComponent} />
               <Route path="/todos" component={ListTodosComponent} />
+              <Route path="/logout" component={LogoutComponent} />
               <Route component={ErrorComponent} />
             </Switch>
             <FooterComponent></FooterComponent>
@@ -31,14 +32,34 @@ class HeaderComponent extends Component {
       <>
         <header>
           <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-            <div><a href='http://www.rnt-creative.io' className='navbar-brand'>RNT-Todo-App</a></div>
+            <div>
+              <a href="http://www.rnt-creative.io" className="navbar-brand">
+                RNT-Todo-App
+              </a>
+            </div>
             <ul className="navbar-nav">
-              <li><Link className='nav-link' to="/welcome">Home</Link></li>
-              <li><Link className='nav-link' to="/todos">Todos</Link></li>
+              <li>
+                <Link className="nav-link" to="/welcome">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link className="nav-link" to="/todos">
+                  Todos
+                </Link>
+              </li>
             </ul>
             <ul className="navbar-nav navbar-collapse justify-content-end">
-              <li><Link className='nav-link' to="/Login">Login</Link></li>
-              <li><Link className='nav-link' to="/logout">Logout</Link></li>
+              <li>
+                <Link className="nav-link" to="/Login">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link className="nav-link" to="/logout">
+                  Logout
+                </Link>
+              </li>
             </ul>
           </nav>
         </header>
@@ -49,7 +70,22 @@ class HeaderComponent extends Component {
 
 class FooterComponent extends Component {
   render() {
-    return <div>Footer</div>;
+    return (
+      <footer className='footer'>
+        <span className='text-muted'>All Right Reserved 2021 &#64; Powered By Rian </span>
+      </footer>
+    )
+  }
+}
+
+class LogoutComponent extends Component {
+  render() {
+    return (
+      <>
+        <h1>You are Logout.</h1>
+        <div className="container">Thank you for using RNT-Todo-App.</div>
+      </>
+    );
   }
 }
 
@@ -175,18 +211,18 @@ class LoginComponent extends Component {
   }
 }
 
-function ShowInvalidCredentials(props) {
-  if (props.hasLoginFailed) {
-    return <div>Invalid Credentials</div>;
-  }
-  return null;
-}
+// function ShowInvalidCredentials(props) {
+//   if (props.hasLoginFailed) {
+//     return <div>Invalid Credentials</div>;
+//   }
+//   return null;
+// }
 
-function ShowLoginSuccessMessage(props) {
-  if (props.showSuccessMessage) {
-    return <div>Login Successful</div>;
-  }
-  return null;
-}
+// function ShowLoginSuccessMessage(props) {
+//   if (props.showSuccessMessage) {
+//     return <div>Login Successful</div>;
+//   }
+//   return null;
+// }
 
 export default TodoApp;
