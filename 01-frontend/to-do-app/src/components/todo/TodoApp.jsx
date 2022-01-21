@@ -28,42 +28,54 @@ class TodoApp extends Component {
 
 class HeaderComponent extends Component {
   render() {
+    const isUserLoggedIn = AuthService.isUserLoggedIn();
+    // console.log(isUserLoggedIn)
     return (
-      <>
-        <header>
-          <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-            <div>
-              <a href="http://www.rnt-creative.io" className="navbar-brand">
-                RNT-Todo-App
-              </a>
-            </div>
-            <ul className="navbar-nav">
+      <header>
+        <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+          <div>
+            <a href="http://www.rnt-creative.io" className="navbar-brand">
+              RNT-Todo-App
+            </a>
+          </div>
+
+          <ul className="navbar-nav">
+            {
+            isUserLoggedIn && 
               <li>
                 <Link className="nav-link" to="/welcome">
                   Home
                 </Link>
               </li>
+            }
+
+            {isUserLoggedIn && 
               <li>
                 <Link className="nav-link" to="/todos">
                   Todos
                 </Link>
               </li>
-            </ul>
-            <ul className="navbar-nav navbar-collapse justify-content-end">
+            }
+          </ul>
+          <ul className="navbar-nav navbar-collapse justify-content-end">
+            {!isUserLoggedIn && 
               <li>
                 <Link className="nav-link" to="/Login">
                   Login
                 </Link>
               </li>
+            }
+
+            {isUserLoggedIn && 
               <li>
                 <Link className="nav-link" to="/logout" onClick={AuthService.logout}>
                   Logout
                 </Link>
               </li>
-            </ul>
-          </nav>
-        </header>
-      </>
+            }
+          </ul>
+        </nav>
+      </header>
     );
   }
 }
@@ -96,7 +108,7 @@ class ListTodosComponent extends Component {
       todos: [
         { id: 1, description: 'Learn React', done: false, targetDate: new Date() },
         { id: 2, description: 'Become an expert in react', done: false, targetDate: new Date() },
-        { id: 2, description: 'Visit Lenangguar, Sumbawa, West Nusa Tenggara', done: false, targetDate: new Date() },
+        { id: 3, description: 'Visit Lenangguar, Sumbawa, West Nusa Tenggara', done: false, targetDate: new Date() },
       ],
     };
   }
@@ -107,7 +119,7 @@ class ListTodosComponent extends Component {
         <h1> List Todos</h1>
 
         <div className="container">
-          <table className='table'>
+          <table className="table">
             <thead>
               <tr>
                 <th>Description</th>
@@ -117,7 +129,7 @@ class ListTodosComponent extends Component {
             </thead>
             <tbody>
               {this.state.todos.map((todo) => (
-                <tr>
+                <tr key={todo.id}>
                   <td>{todo.description}</td>
                   <td>{todo.done.toString()}</td>
                   <td>{todo.targetDate.toString()}</td>
@@ -188,7 +200,7 @@ class LoginComponent extends Component {
   loginClicked() {
     // RNT-todo, dummy
     if (this.state.username === 'rian' && this.state.password === 'dummy') {
-      AuthService.registerSuccessfulLogin(this.state.username, this.state.password)
+      AuthService.registerSuccessfulLogin(this.state.username, this.state.password);
       this.props.history.push(`/welcome/${this.state.username}`);
       // this.setState({ showSuccessMessage: true });
       // this.setState({ hasLoginFailed: false });
