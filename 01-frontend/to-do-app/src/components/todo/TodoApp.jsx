@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import AuthService from './AuthService';
+import AuthRoute from './AuthRoute';
+
 class TodoApp extends Component {
   render() {
     return (
@@ -11,9 +13,9 @@ class TodoApp extends Component {
             <Switch>
               <Route path="/" exact component={LoginComponent} />
               <Route path="/login" component={LoginComponent} />
-              <Route path="/welcome/:name" component={WelcomeComponent} />
-              <Route path="/todos" component={ListTodosComponent} />
-              <Route path="/logout" component={LogoutComponent} />
+              <AuthRoute path="/welcome/:name" component={WelcomeComponent} />
+              <AuthRoute path="/todos" component={ListTodosComponent} />
+              <AuthRoute path="/logout" component={LogoutComponent} />
               <Route component={ErrorComponent} />
             </Switch>
             <FooterComponent></FooterComponent>
