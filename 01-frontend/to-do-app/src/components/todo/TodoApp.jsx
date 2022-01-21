@@ -56,7 +56,7 @@ class HeaderComponent extends Component {
                 </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/logout">
+                <Link className="nav-link" to="/logout" onClick={AuthService.logout}>
                   Logout
                 </Link>
               </li>
