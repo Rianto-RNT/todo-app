@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import HelloWorldService from '../../api/todo/HelloWorldService';
 
 class WelcomeComponent extends Component {
-  constructor (props) {
-    super(props)
-    this.retrieveWelcomeMessage = this.retrieveWelcomeMessage.bind(this)
+  constructor(props) {
+    super(props);
+    this.retrieveWelcomeMessage = this.retrieveWelcomeMessage.bind(this);
   }
-  
+
   render() {
     return (
       <>
@@ -24,10 +25,11 @@ class WelcomeComponent extends Component {
     );
   }
 
-  retrieveWelcomeMessage () {
-    console.log('retrieve clicked')
+  retrieveWelcomeMessage() {
+    HelloWorldService.executeHelloWorldService()
+    .then(response => console.log(response))
+    // .catch();
   }
-
 }
 
 export default WelcomeComponent;
