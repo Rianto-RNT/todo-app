@@ -1,4 +1,4 @@
-package com.rian.rest.webservices.restfulwebservices;
+package com.rian.rest.webservices.restfulwebservices.helloworld;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class HelloWorld {
     }
 
     @GetMapping(path="/hello-world-bean")
-    public HelloWorldBean  helloWorldBean() {
+    public HelloWorldBean helloWorldBean() {
 
         return new HelloWorldBean("Hello World Bean");
     }
