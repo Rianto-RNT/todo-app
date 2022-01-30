@@ -16,7 +16,8 @@ public class TodoResource {
     private TodoHardcodedService todoService;
 
     @GetMapping("/users/{username}/todos")
-    public List<Todo> getAllTodos(@PathVariable String username){
+    public List<Todo> getAllTodos(@PathVariable String username) throws InterruptedException{
+        Thread.sleep(5000);
         return todoService.findAll();
     }
 }
