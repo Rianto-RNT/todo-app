@@ -25,7 +25,7 @@ public class TodoResource {
             @PathVariable String username, @PathVariable long id) {
         Todo todo = todoService.deleteById(id);
 
-        if (todo! = null) {
+        if (todo != null) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
