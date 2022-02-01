@@ -3,6 +3,7 @@ package com.rian.rest.webservices.restfulwebservices.todo;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,9 @@ public class TodoResource {
 //        Thread.sleep(5000);
         return todoService.findAll();
 
-    } @GetMapping("/users/{username}/todos/{id}")
+    }
+
+    @GetMapping("/users/{username}/todos/{id}")
     public Todo getTodo(@PathVariable String username, @PathVariable long id) {
 //        Thread.sleep(5000);
         return todoService.findById(id);
@@ -34,5 +37,15 @@ public class TodoResource {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("users/{username}/todos/{id}")
+    public ResponseEntity<Todo> updateTodo(
+            @PathVariable String username,
+            @PathVariable long id,
+            @RequestBody Todo todo) {
+
+        Todo todoUpdated = todoService.save(todo);
+        return new ResponseEntity<Todo>(todo, HttpStatus.OK);
     }
 }
