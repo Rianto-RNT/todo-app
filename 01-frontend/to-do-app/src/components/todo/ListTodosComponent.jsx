@@ -5,62 +5,61 @@ import AuthService from './AuthService';
 
 class ListTodosComponent extends Component {
   constructor(props) {
-    console.log('constructor')
+    console.log('constructor');
     super(props);
     this.state = {
       todos: [],
       message: null,
-    }
-    this.updateTodoClicked = this.updateTodoClicked.bind(this)
-    this.deleteTodoClicked = this.deleteTodoClicked.bind(this)
-    this.refreshTodos = this.refreshTodos.bind(this)
+    };
+    this.updateTodoClicked = this.updateTodoClicked.bind(this);
+    this.deleteTodoClicked = this.deleteTodoClicked.bind(this);
+    this.addTodoClicked = this.addTodoClicked.bind(this)
+    this.refreshTodos = this.refreshTodos.bind(this);
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount')
+    console.log('componentWillUnmount');
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('shouldComponentUpdate')
-    console.log(nextProps)
-    console.log(nextState)
+    console.log('shouldComponentUpdate');
+    console.log(nextProps);
+    console.log(nextState);
     return true;
   }
 
   componentDidMount() {
-    console.log('componentDidMount')
+    console.log('componentDidMount');
     this.refreshTodos();
-    console.log(this.state)
+    console.log(this.state);
   }
 
   refreshTodos() {
-    let username = AuthService.getLoggedInUserName
-    TodoDataService.retrieveAllTodos(username)
-    .then(
-      response => {
-        // console.log(response)
-        this.setState({todos: response.data})
-      }
-    )
-    console.log(this.state)
+    let username = AuthService.getLoggedInUserName;
+    TodoDataService.retrieveAllTodos(username).then((response) => {
+      // console.log(response)
+      this.setState({ todos: response.data });
+    });
+    console.log(this.state);
   }
 
   deleteTodoClicked(id) {
-    let username = AuthService.getLoggedInUserName()
+    let username = AuthService.getLoggedInUserName();
     // console.log(id + " " + username);
-    TodoDataService.deleteTodo(username, id)
-    .then (
-      response => {
-        this.setState({message: `Delete of todo ${id} successful`})
-        this.refreshTodos()
-      }
-    )
+    TodoDataService.deleteTodo(username, id).then((response) => {
+      this.setState({ message: `Delete of todo ${id} successful` });
+      this.refreshTodos();
+    });
+  }
+
+  addTodoClicked() {
+    this.props.history.push(`/todos/-1`);
   }
 
   updateTodoClicked(id) {
     // let username = AuthService.getLoggedInUserName()
     console.log('update ' + id);
-    this.props.history.push(`/todos/${id}`)
+    this.props.history.push(`/todos/${id}`);
     // TodoDataService.deleteTodo(username, id)
     // .then (
     //   response => {
@@ -71,12 +70,12 @@ class ListTodosComponent extends Component {
   }
 
   render() {
-    console.log('render')
+    console.log('render');
     return (
       <div>
         <h1> List Todos</h1>
 
-        {this.state.message && <div className='alert alert-success'>{this.state.message}</div>}
+        {this.state.message && <div className="alert alert-success">{this.state.message}</div>}
 
         <div className="container">
           <table className="table">
@@ -95,12 +94,25 @@ class ListTodosComponent extends Component {
                   <td>{todo.description}</td>
                   <td>{todo.done.toString()}</td>
                   <td>{moment(todo.targetDate).format('DD-MM-YYYY')}</td>
-                  <td><button className='btn btn-success' onClick={() => this.updateTodoClicked(todo.id)}>Update</button></td>
-                  <td><button className='btn btn-warning' onClick={() => this.deleteTodoClicked(todo.id)}>Delete</button></td>
+                  <td>
+                    <button className="btn btn-success" onClick={() => this.updateTodoClicked(todo.id)}>
+                      Update
+                    </button>
+                  </td>
+                  <td>
+                    <button className="btn btn-warning" onClick={() => this.deleteTodoClicked(todo.id)}>
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <div className="row">
+            <button className="btn btn-success" onClick={this.addTodoClicked}>Add</button>
+          </div>
+
         </div>
       </div>
     );

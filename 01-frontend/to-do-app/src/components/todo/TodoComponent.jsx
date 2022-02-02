@@ -10,7 +10,7 @@ class TodoComponent extends Component {
 
     this.state = {
       id: this.props.match.params.id,
-      description: 'Learn Forms Now',
+      description: '',
       targetDate: moment(new Date()).format('DD-MM-YYYY'),
     };
 
@@ -19,37 +19,51 @@ class TodoComponent extends Component {
   }
 
   componentDidMount() {
+    if (this.state.id === -1) {
+      return
+    }
+
     let username = AuthService.getLoggedInUserName();
-    TodoDataService.retrieveTodo(username, this.state.id).then((response) =>
+
+    TodoDataService.retrieveTodo(username, this.state.id)
+    .then((response) =>
       this.setState({
         description: response.data.description,
         targetDate: moment(response.data.targetDate).format('DD-MM-YYYY'),
-      })
-    );
+      }))
   }
 
   validate(values) {
-    let errors = {};
+    let errors = {}
     if (!values.description) {
       errors.description = 'Enter a Description';
     } else if (values.description.length < 5) {
       errors.description = 'Enter at least 5 character in Description';
     }
 
-    if (!moment(values.targetDate).isValid) {
+    if (!moment(values.targetDate).isValid()) {
       errors.targetDate = 'Enter a valid Target Date';
     }
 
-    return errors;
+    return errors
   }
 
   onSubmit(values) {
     let username = AuthService.getLoggedInUserName();
-    TodoDataService.updateTodo(username, this.state.id, {
+
+    let todo = {
       id: this.state.id,
       description: values.description,
-      targetDate: values.targetDate,
-    }).then(() => this.props.history.push('/todos'));
+      targetDate: values.targetDate
+    }
+
+    if (this.state.id === -1) {
+      TodoDataService.createTodo(username, todo)
+      .then(() => this.props.history.push('/todos'));
+    } else {
+      TodoDataService.updateTodo(username, this.state.id, todo)
+      .then(() => this.props.history.push('/todos'));
+    }
 
     console.log(values);
   }
@@ -70,7 +84,7 @@ class TodoComponent extends Component {
             enableReinitialize={true}
           >
             {(props) => (
-              <>
+
                 <Form>
                   <ErrorMessage name="description" component="div" className="alert alert-warning" />
                   <ErrorMessage name="targetDate" component="div" className="alert alert-warning" />
@@ -82,14 +96,13 @@ class TodoComponent extends Component {
 
                   <fieldset className="form-group">
                     <label>Target Date</label>
-                    <Field className="form-control" type="date" name="tergetDate" />
+                    <Field className="form-control" type="date" name="targetDate" />
                   </fieldset>
 
                   <button className="btn btn-success" type="submit">
                     Save
                   </button>
                 </Form>
-              </>
             )}
           </Formik>
         </div>
