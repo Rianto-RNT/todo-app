@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import TodoDataService from '../../api/todo/TodoDataService';
-import AuthService from './AuthService'
+import AuthService from './AuthService';
 
 class TodoComponent extends Component {
   constructor(props) {
@@ -19,30 +19,38 @@ class TodoComponent extends Component {
   }
 
   componentDidMount() {
-    let username = AuthService.getLoggedInUserName()
-    TodoDataService.retrieveTodo(username, this.state.id)
-    .then (response =>this.setState({
-      description: response.data.description,
-      targetDate: moment(response.data.targetDate).format('DD-MM-YYYY')
-    }))
+    let username = AuthService.getLoggedInUserName();
+    TodoDataService.retrieveTodo(username, this.state.id).then((response) =>
+      this.setState({
+        description: response.data.description,
+        targetDate: moment(response.data.targetDate).format('DD-MM-YYYY'),
+      })
+    );
   }
 
   validate(values) {
     let errors = {};
     if (!values.description) {
-      errors.description = "Enter a Description"
+      errors.description = 'Enter a Description';
     } else if (values.description.length < 5) {
-      errors.description = "Enter at least 5 character in Description"
+      errors.description = 'Enter at least 5 character in Description';
     }
 
-    if(!moment(values.targetDate).isValid) {
-      errors.targetDate = 'Enter a valid Target Date'
+    if (!moment(values.targetDate).isValid) {
+      errors.targetDate = 'Enter a valid Target Date';
     }
 
     return errors;
   }
 
   onSubmit(values) {
+    let username = AuthService.getLoggedInUserName();
+    TodoDataService.updateTodo(username, this.state.id, {
+      id: this.state.id,
+      description: values.description,
+      targetDate: values.targetDate,
+    }).then(() => this.props.history.push('/todos'));
+
     console.log(values);
   }
 
@@ -53,23 +61,20 @@ class TodoComponent extends Component {
       <div>
         <h1> Todo</h1>
         <div className="container">
-          
-          <Formik 
-          initialValues = {{ description, targetDate }} 
-          onSubmit={this.onSubmit}
-          validateOnChange= {false}
-          validateOnBlur={false}
-          validate={this.validate}
-          enableReinitialize={true}
+          <Formik
+            initialValues={{ description, targetDate }}
+            onSubmit={this.onSubmit}
+            validateOnChange={false}
+            validateOnBlur={false}
+            validate={this.validate}
+            enableReinitialize={true}
           >
-           
-           
             {(props) => (
               <>
                 <Form>
                   <ErrorMessage name="description" component="div" className="alert alert-warning" />
                   <ErrorMessage name="targetDate" component="div" className="alert alert-warning" />
-                  
+
                   <fieldset className="form-group">
                     <label> Description</label>
                     <Field className="form-control" type="text" name="description" />
