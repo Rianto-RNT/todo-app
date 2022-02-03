@@ -2,16 +2,26 @@ import axios from 'axios'
 
 class HelloWorldService {
     executeHelloWorldService() {
-        return axios.get('http://localhost:8080/hello-world')
         // console.log('Execute service')
+        return axios.get('http://localhost:8080/hello-world')
     }
     executeHelloWorldBeanService() {
-        return axios.get('http://localhost:8080/hello-world-bean')
         // console.log('Execute service')
+        return axios.get('http://localhost:8080/hello-world-bean')
     }
     executeHelloWorldPathVariableService(name) {
-        return axios.get(`http://localhost:8080/hello-world/path-variable/${name}`)
         // console.log('Execute service')
+        let username = 'rian'
+        let password = 'test123'
+
+        let basicAuthHeader = 'Basic ' + window.btoa(username + ":" + password)
+        return axios.get(`http://localhost:8080/hello-world/path-variable/${name}`,
+            {
+                headers: {
+                    // authorization: basicAuthHeader
+                }
+            }
+        )
     }
 
 }
