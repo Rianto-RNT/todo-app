@@ -17,8 +17,8 @@ public class SpringSecurityBasicAuth extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .anyRequest()).authenticated()
-                .and())
+                .anyRequest().authenticated()
+                .and()
         //.formLogin().and())
                 .httpBasic();
     }
