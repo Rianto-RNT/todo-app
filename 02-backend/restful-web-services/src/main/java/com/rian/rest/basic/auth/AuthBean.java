@@ -1,4 +1,4 @@
-package com.rian.rest.webservices.restfulwebservices.basic.auth;
+package com.rian.rest.basic.auth;
 
 public class AuthBean {
 
